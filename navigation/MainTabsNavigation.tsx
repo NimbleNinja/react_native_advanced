@@ -16,12 +16,25 @@ const MainTabsNavigation = () => {
         component={DeckScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ size, color }) => <Icon name="search" size={size} color={color} />,
-          tabBarBadge: 1
+          tabBarIcon: ({ size, color }) => <Icon name="search" size={size} color={color} />
         }}
       />
-      <Tab.Screen name="map" component={MapScreen} />
-      <Tab.Screen name="review" component={ReviewTabsNavigation} />
+      <Tab.Screen
+        name="map"
+        component={MapScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => <Icon name="map" size={size} color={color} />
+        }}
+      />
+      <Tab.Screen
+        name="review"
+        component={ReviewTabsNavigation}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => <Icon name="visibility" size={size} color={color} />
+        }}
+      />
     </Tab.Navigator>
   )
 }

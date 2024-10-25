@@ -4,6 +4,7 @@ import { RootNavigation } from './navigation/RootNavigation'
 import { Platform, UIManager } from 'react-native'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { StatusBar } from 'expo-status-bar'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -16,6 +17,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <RootNavigation />
+        <StatusBar style="auto" />
       </NavigationContainer>
     </Provider>
   )

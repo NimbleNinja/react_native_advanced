@@ -3,3 +3,8 @@ export type Slide = {
   text: string
   backgroundColor: string
 }
+
+export type Job = {
+  employer_name: string
+  employer_logo: string
+}

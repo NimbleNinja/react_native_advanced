@@ -18,8 +18,6 @@ export const RootNavigation = () => {
     dispatch(checkAuthorizationThunk())
   }, [])
 
-  console.log(token)
-
   //if (token === null) {
   //  return (
   //    <View style={{ flex: 1, justifyContent: 'center' }}>
