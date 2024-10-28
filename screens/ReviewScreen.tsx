@@ -1,14 +1,28 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from '@rneui/themed'
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated'
-import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg'
+import Reanimated, { useAnimatedProps, useSharedValue } from 'react-native-reanimated'
+import LottieView from 'lottie-react-native'
+
+const ReanimatedLottieView = Reanimated.createAnimatedComponent(LottieView)
 
 const ReviewScreen = () => {
-  const width = useSharedValue(100)
+  const viewRef = useRef<LottieView>(null)
+  const [speed, setSpeed] = useState(1)
 
-  const handleAnimation = () => {
-    width.value = withSpring(width.value + 50)
+  const upHandler = () => {
+    setSpeed(prev => prev + 0.1)
+  }
+
+  const startHandler = () => {
+    viewRef.current?.play()
+  }
+
+  const slowHandler = () => {
+    setSpeed(prev => {
+      if (prev <= 0.1) return 0.1
+      return prev - 0.1
+    })
   }
 
   const getJobs = () => {
@@ -34,16 +48,17 @@ const ReviewScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Svg width="100" height="100" viewBox="0 0 100 100">
-        <Defs>
-          <LinearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <Stop offset="0%" stopColor="#007bff" />
-            <Stop offset="100%" stopColor="#00ff77" />
-          </LinearGradient>
-        </Defs>
-        <Circle cx="50" cy="50" r="45" stroke="url(#gradient)" strokeWidth="10" fill="none" />
-      </Svg>
-      <Button title="start" onPress={getJobs} />
+      <ReanimatedLottieView
+        ref={viewRef}
+        speed={speed}
+        style={{ height: 200, width: 200 }}
+        source={require('../assets/animations/loader.json')}
+      />
+      <View style={{ flexDirection: 'row', gap: 10 }}>
+        <Button title="up" onPress={upHandler} />
+        <Button title="start" onPress={startHandler} />
+        <Button title="slow" onPress={slowHandler} />
+      </View>
     </View>
   )
 }

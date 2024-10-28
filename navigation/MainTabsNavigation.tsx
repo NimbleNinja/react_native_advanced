@@ -5,6 +5,7 @@ import { MapScreen } from '../screens/MapScreen'
 import { MainTabsParamList } from '../types/navigation'
 import ReviewTabsNavigation from './ReviewTabsNavigation'
 import { Icon } from '@rneui/themed'
+import HeartTab from '../components/HeartTab'
 
 const Tab = createBottomTabNavigator<MainTabsParamList>()
 
@@ -32,7 +33,10 @@ const MainTabsNavigation = () => {
         component={ReviewTabsNavigation}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => <Icon name="visibility" size={size} color={color} />
+          //tabBarIcon: ({ color, size, focused }) => <Icon name="visibility" size={size} color={color} />
+          tabBarIcon: props => {
+            return <HeartTab size={props.size} focused={props.focused} />
+          }
         }}
       />
     </Tab.Navigator>
