@@ -6,12 +6,15 @@ import { MainTabsParamList } from '../types/navigation'
 import ReviewTabsNavigation from './ReviewTabsNavigation'
 import { Icon } from '@rneui/themed'
 import HeartTab from '../components/HeartTab'
+import StyledTabBar from '../components/StyledTabBar'
 
 const Tab = createBottomTabNavigator<MainTabsParamList>()
 
+//tabBar={props => <StyledTabBar {...props} />}
+
 const MainTabsNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={props => <StyledTabBar {...props} />}>
       <Tab.Screen
         name="deck"
         component={DeckScreen}
@@ -34,8 +37,10 @@ const MainTabsNavigation = () => {
         options={{
           headerShown: false,
           //tabBarIcon: ({ color, size, focused }) => <Icon name="visibility" size={size} color={color} />
-          tabBarIcon: props => {
-            return <HeartTab size={props.size} focused={props.focused} />
+          tabBarIcon: ({ focused, size }) => {
+            //console.log('Focused in Review: ', focused)
+
+            return <HeartTab size={size} focused={focused} />
           }
         }}
       />

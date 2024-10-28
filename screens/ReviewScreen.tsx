@@ -18,6 +18,10 @@ const ReviewScreen = () => {
     viewRef.current?.play()
   }
 
+  const stopHandler = () => {
+    viewRef.current?.pause()
+  }
+
   const slowHandler = () => {
     setSpeed(prev => {
       if (prev <= 0.1) return 0.1
@@ -55,9 +59,10 @@ const ReviewScreen = () => {
         source={require('../assets/animations/loader.json')}
       />
       <View style={{ flexDirection: 'row', gap: 10 }}>
-        <Button title="up" onPress={upHandler} />
+        <Button title="+" onPress={upHandler} />
         <Button title="start" onPress={startHandler} />
-        <Button title="slow" onPress={slowHandler} />
+        <Button title="stop" onPress={stopHandler} />
+        <Button title="-" onPress={slowHandler} />
       </View>
     </View>
   )

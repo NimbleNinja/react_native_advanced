@@ -1,42 +1,34 @@
-import { Animated, StyleSheet } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import { StyleSheet } from 'react-native'
+import React, { useEffect, useRef, memo } from 'react'
 import LottieView from 'lottie-react-native'
 
 type Props = {
   size: number
   focused: boolean
+  index: number
 }
 
-const AnimatedLottieView = Animated.createAnimatedComponent(LottieView)
-
-const HeartTab: React.FC<Props> = ({ size, focused }) => {
+const HeartTab: React.FC<Props> = memo(({ size, focused, index }) => {
   const ref = useRef<LottieView>(null)
-  const progress = useRef(new Animated.Value(0)).current
-
-  console.log('focused: ', focused)
 
   useEffect(() => {
-    if (!ref.current) return
-
-    Animated.timing(progress, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true
-    }).start(() => {
-      progress.setValue(0)
-      console.log('Animation end')
-    })
-  }, [])
+    if (focused) {
+      ref.current?.play()
+    } else {
+      ref.current?.reset()
+    }
+  }, [focused])
 
   return (
-    <AnimatedLottieView
+    <LottieView
       ref={ref}
-      progress={progress}
+      loop={false}
+      speed={1.5}
       style={[{ width: size, height: size }]}
       source={require('../assets/animations/heart.json')}
     />
   )
-}
+})
 
 export default HeartTab
 
