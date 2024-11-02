@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { useAppDispatch } from '../store/hooks'
 import { signoutThunk } from '../store/authorization'
-import { Button, Text } from '@rneui/themed'
+import { Button } from '@rneui/themed'
 
 const DeckScreen = () => {
   const dispatch = useAppDispatch()
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 })
