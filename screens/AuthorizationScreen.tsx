@@ -2,18 +2,16 @@ import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { Button, Icon, Text } from '@rneui/themed'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { useAppDispatch } from '../store/hooks'
 import { signinThunk } from '../store/authorization'
 
 GoogleSignin.configure({
-  webClientId: '693464854055-boqcr80o0767reaispb0k4bhlehbq24t.apps.googleusercontent.com'
+  webClientId:
+    '693464854055-boqcr80o0767reaispb0k4bhlehbq24t.apps.googleusercontent.com'
 })
-
-const BASE_URL = 'https://us-central1-react-native-advanced-8f10b.cloudfunctions.net'
 
 const AuthorizationScreen = () => {
   const dispatch = useAppDispatch()
-  const token = useAppSelector(state => state.authorization.token)
 
   const submitHandler = () => {
     dispatch(signinThunk())

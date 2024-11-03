@@ -12,7 +12,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>()
 
 export const RootNavigation = () => {
   const dispatch = useAppDispatch()
-  const token = useAppSelector(selectToken)
+  // const token = useAppSelector(selectToken)
 
   useEffect(() => {
     dispatch(checkAuthorizationThunk())

@@ -1,16 +1,23 @@
-import React, { useMemo, useRef, useState } from 'react'
-import { Card as CardType } from '../types/types'
-import { Animated, LayoutAnimation, PanResponder, StyleSheet, View, useWindowDimensions } from 'react-native'
-import { Card } from '@rneui/themed'
+import React, { useMemo, useRef, useState } from 'react';
+import { Card as CardType } from '../types/types';
+import {
+  Animated,
+  LayoutAnimation,
+  PanResponder,
+  StyleSheet,
+  View,
+  useWindowDimensions
+} from 'react-native';
+import { Card } from '@rneui/themed';
 
 type Props = {
-  data: CardType[]
-  renderCard: (item: CardType) => React.JSX.Element
-}
+  data: CardType[];
+  renderCard: (item: CardType) => React.JSX.Element;
+};
 
 export const Cards: React.FC<Props> = ({ renderCard, data }) => {
-  const [cards, setCards] = useState(data)
-  const { width } = useWindowDimensions()
+  const [cards, setCards] = useState(data);
+  const { width } = useWindowDimensions();
   const size = useMemo(
     () => ({
       screenWidth: width,
@@ -18,9 +25,9 @@ export const Cards: React.FC<Props> = ({ renderCard, data }) => {
       rotateWidth: width * 0.75
     }),
     [width]
-  )
+  );
 
-  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -33,36 +40,35 @@ export const Cards: React.FC<Props> = ({ renderCard, data }) => {
             useNativeDriver: false,
             toValue: { x: size.screenWidth, y: 0 },
             duration: 500
-          }).start(() => onCompleteSwipe())
+          }).start(() => onCompleteSwipe());
         } else if (gestureState.dx < -size.gestureWidth) {
           Animated.timing(position, {
             useNativeDriver: false,
             toValue: { x: -size.screenWidth, y: 0 },
             duration: 500
-          }).start(() => onCompleteSwipe())
+          }).start(() => onCompleteSwipe());
         } else {
           Animated.spring(position, {
             toValue: { x: 0, y: 0 },
             useNativeDriver: false
-          }).start()
+          }).start();
         }
       }
     })
-  ).current
+  ).current;
 
   const onCompleteSwipe = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear)
-    setCards(prev => {
-      const [first, ...cards] = prev
-      return cards
-    })
-    position.setValue({ x: 0, y: 0 })
-  }
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    setCards((prev) => {
+      return prev.slice(1);
+    });
+    position.setValue({ x: 0, y: 0 });
+  };
 
   const rotate = position.x.interpolate({
     inputRange: [-size.rotateWidth, 0, size.rotateWidth],
     outputRange: ['-45deg', '0deg', '45deg']
-  })
+  });
 
   const renderCards = () => {
     if (!cards.length) {
@@ -70,7 +76,7 @@ export const Cards: React.FC<Props> = ({ renderCard, data }) => {
         <Card>
           <Card.Title>No items</Card.Title>
         </Card>
-      )
+      );
     }
 
     return cards
@@ -79,24 +85,30 @@ export const Cards: React.FC<Props> = ({ renderCard, data }) => {
           return (
             <Animated.View
               {...panResponder.panHandlers}
-              style={[styles.card, { transform: [{ translateX: position.x }, { rotateZ: rotate }] }]}
+              style={[
+                styles.card,
+                { transform: [{ translateX: position.x }, { rotateZ: rotate }] }
+              ]}
               key={card.id}
             >
               {renderCard(card)}
             </Animated.View>
-          )
+          );
         }
         return (
-          <Animated.View key={card.id} style={[styles.card, { top: 15 * index }]}>
+          <Animated.View
+            key={card.id}
+            style={[styles.card, { top: 15 * index }]}
+          >
             {renderCard(card)}
           </Animated.View>
-        )
+        );
       })
-      .reverse()
-  }
+      .reverse();
+  };
 
-  return <View>{renderCards()}</View>
-}
+  return <View>{renderCards()}</View>;
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -104,4 +116,4 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   }
-})
+});

@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native'
 import React, { useEffect, useRef, memo } from 'react'
 import LottieView from 'lottie-react-native'
 
@@ -8,7 +7,7 @@ type Props = {
   index: number
 }
 
-const HeartTab: React.FC<Props> = memo(({ size, focused, index }) => {
+const HeartTab = memo<Props>(({ size, focused }) => {
   const ref = useRef<LottieView>(null)
 
   useEffect(() => {
@@ -30,6 +29,6 @@ const HeartTab: React.FC<Props> = memo(({ size, focused, index }) => {
   )
 })
 
-export default HeartTab
+HeartTab.displayName = 'HeartTab'
 
-const styles = StyleSheet.create({})
+export default HeartTab
